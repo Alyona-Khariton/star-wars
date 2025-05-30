@@ -7,8 +7,8 @@
   },
   "extends": ["airbnb"],
   "parser": "@babel/eslint-parser",
-  "requireConfigFile": false,
   "parserOptions": {
+    "requireConfigFile": false,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true

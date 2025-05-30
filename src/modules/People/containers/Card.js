@@ -4,7 +4,7 @@ import { Divider, Layout, Space, Typography } from 'antd';
 import { CustomDescriptions } from '../../Common/components';
 import { getPeopleById } from '../api/requests';
 
-const { Link, Text, Title } = Typography;
+const { Link, Title } = Typography;
 
 function PeopleCard() {
   const { peopleId } = useParams();
@@ -81,15 +81,21 @@ function PeopleCard() {
       key: 'species',
       label: 'species',
       children: data.species?.length
-        ? data.species.map((item, index) => <Link key={index}>{item}</Link>)
-        : null,
+        ? (
+          <Space direction="vertical">
+            {data.species.map((item, index) => <Link key={index}>{item}</Link>)}
+          </Space>
+        ) : null,
     },
     {
       key: 'starships',
       label: 'starships',
       children: data.starships?.length
-        ? data.starships.map((item, index) => <Text key={index}>{item}</Text>)
-        : null,
+        ? (
+          <Space direction="vertical">
+            {data.starships.map((item, index) => <Link key={index}>{item}</Link>)}
+          </Space>
+        ) : null,
     },
     {
       key: 'url',
@@ -100,8 +106,11 @@ function PeopleCard() {
       key: 'vehicles',
       label: 'vehicles',
       children: data.vehicles?.length
-        ? data.vehicles.map((item, index) => <Text key={index}>{item}</Text>)
-        : null,
+        ? (
+          <Space direction="vertical">
+            {data.vehicles.map((item, index) => <Link key={index}>{item}</Link>)}
+          </Space>
+        ) : null,
     },
   ], [data]);
 
