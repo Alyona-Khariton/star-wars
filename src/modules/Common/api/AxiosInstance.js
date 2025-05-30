@@ -6,9 +6,6 @@ const axiosInstance = axios.create({
   baseURL: ENDPOINT,
 });
 
-
-export const abortControllers = {};
-
 axiosInstance.interceptors.request.use(request => {
   if (!request?.data) {
     request.data = {};
@@ -16,5 +13,20 @@ axiosInstance.interceptors.request.use(request => {
 
   return request;
 });
+
+axiosInstance.interceptors.response.use(
+  response => response,
+  error => {
+    if (!error.response) {
+      console.error('Сервер не отвечает', error.request); // Нет ответа от сервера
+    } else if (!error.response.data) {
+      console.error('Нет данных в ответе', error.response); // Ответ не содержит данных
+    } else {
+      console.error('Сервер вернул ошибку:', error.response); // Ошибка пришла от сервера
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;

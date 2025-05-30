@@ -1,21 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Divider, Layout, Space, Typography } from 'antd';
-import { CustomDescriptions } from '../../Common/components';
-import { getPeopleById } from '../api/requests';
+import { CustomDescriptions, ExpandableText } from '../../Common/components';
+import { getFilmById } from '../api/requests';
 import { formatDateTime, getIdFromUrl } from '../../Common/functions';
 
 const { Link, Title } = Typography;
 
-function PeopleCard() {
-  const { peopleId } = useParams();
+function FilmCard() {
+  const { filmId } = useParams();
   const [data, setData] = useState({});
 
   const attributes = useMemo(() => [
     {
-      key: 'birth_year',
-      label: 'Birth year',
-      children: data.birth_year,
+      key: 'director',
+      label: 'director',
+      children: data.director,
     },
     {
       key: 'created',
@@ -28,55 +28,47 @@ function PeopleCard() {
       children: formatDateTime({ value: data.edited, format: 'L LT' }),
     },
     {
-      key: 'eye_color',
-      label: 'eye_color',
-      children: data.eye_color,
+      key: 'episode_id',
+      label: 'episode_id',
+      children: data.episode_id,
     },
     {
-      key: 'films',
-      label: 'films',
-      children: data.films?.length ? (
+      key: 'characters',
+      label: 'characters',
+      children: data.characters?.length ? (
         <Space direction="vertical">
-          {data.films.map((item, index) => (
-            <Link key={index} href={`/films/${getIdFromUrl(item)}`}>{item}</Link>
+          {data.characters.map((item, index) => (
+            <Link key={index} href={`/people/${getIdFromUrl(item)}`}>{item}</Link>
           ))}
         </Space>
       ) : null,
     },
     {
-      key: 'gender',
-      label: 'gender',
-      children: data.gender,
+      key: 'opening_crawl',
+      label: 'opening_crawl',
+      children: (
+        <ExpandableText text={data.opening_crawl} rows={3} />
+      ),
     },
     {
-      key: 'hair_color',
-      label: 'hair_color',
-      children: data.hair_color,
+      key: 'planets',
+      label: 'planets',
+      children: data.planets?.length
+        ? (
+          <Space direction="vertical">
+            {data.planets.map((item, index) => <Link key={index}>{item}</Link>)}
+          </Space>
+        ) : null,
     },
     {
-      key: 'height',
-      label: 'height',
-      children: data.height,
+      key: 'producer',
+      label: 'producer',
+      children: data.producer,
     },
     {
-      key: 'homeworld',
-      label: 'homeworld',
-      children: <Link>{data.homeworld}</Link>,
-    },
-    {
-      key: 'mass',
-      label: 'mass',
-      children: data.mass,
-    },
-    {
-      key: 'name',
-      label: 'name',
-      children: data.name,
-    },
-    {
-      key: 'skin_color',
-      label: 'skin_color',
-      children: data.skin_color,
+      key: 'release_date',
+      label: 'release_date',
+      children: data.release_date,
     },
     {
       key: 'species',
@@ -116,21 +108,21 @@ function PeopleCard() {
   ], [data]);
 
   const getData = async id => {
-    const res = await getPeopleById(id);
+    const res = await getFilmById(id);
     setData(res);
   };
 
   useEffect(() => {
-    if (!peopleId) return;
-    getData(peopleId);
-  }, [peopleId]);
+    if (!filmId) return;
+    getData(filmId);
+  }, [filmId]);
 
   return (
     <Layout>
       <Layout>
         <Space split={<Divider type="vertical" />}>
           <Title level={3}>
-            {data.name}
+            {data.title}
           </Title>
         </Space>
       </Layout>
@@ -142,4 +134,4 @@ function PeopleCard() {
   );
 }
 
-export default PeopleCard;
+export default FilmCard;
