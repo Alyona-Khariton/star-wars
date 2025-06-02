@@ -1,9 +1,11 @@
 import CustomDescriptions from './CustomDescriptions';
-import ExpandableText from './ExpandableText';
+import CollapsibleList from './CollapsibleList';
+import CollapsibleText from './CollapsibleText';
 import UrlListTableCellView from './MultipleAttributeTableCellView/UrlListTableCellView';
 
 export {
   CustomDescriptions,
-  ExpandableText,
+  CollapsibleList,
+  CollapsibleText,
   UrlListTableCellView,
 };

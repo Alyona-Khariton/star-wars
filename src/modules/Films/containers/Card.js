@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Divider, Layout, Space, Typography } from 'antd';
-import { CustomDescriptions, ExpandableText } from '../../Common/components';
+import { Layout, Typography } from 'antd';
+import { CustomDescriptions, CollapsibleList, CollapsibleText } from '../../Common/components';
 import { getFilmById } from '../api/requests';
 import { formatDateTime, getIdFromUrl } from '../../Common/functions';
+import Styles from '../../Common/Layouts/styles';
 
 const { Link, Title } = Typography;
 
 function FilmCard() {
+  const styles = Styles();
   const { filmId } = useParams();
   const [data, setData] = useState({});
 
@@ -36,18 +38,19 @@ function FilmCard() {
       key: 'characters',
       label: 'characters',
       children: data.characters?.length ? (
-        <Space direction="vertical">
-          {data.characters.map((item, index) => (
+        <CollapsibleList
+          data={data.characters}
+          renderItem={(item, index) => (
             <Link key={index} href={`/people/${getIdFromUrl(item)}`}>{item}</Link>
-          ))}
-        </Space>
+          )}
+        />
       ) : null,
     },
     {
       key: 'opening_crawl',
       label: 'opening_crawl',
       children: (
-        <ExpandableText text={data.opening_crawl} rows={3} />
+        <CollapsibleText text={data.opening_crawl} rows={3} />
       ),
     },
     {
@@ -55,9 +58,12 @@ function FilmCard() {
       label: 'planets',
       children: data.planets?.length
         ? (
-          <Space direction="vertical">
-            {data.planets.map((item, index) => <Link key={index}>{item}</Link>)}
-          </Space>
+          <CollapsibleList
+            data={data.planets}
+            renderItem={(item, index) => (
+              <Link key={index} href={item}>{item}</Link>
+            )}
+          />
         ) : null,
     },
     {
@@ -75,9 +81,12 @@ function FilmCard() {
       label: 'species',
       children: data.species?.length
         ? (
-          <Space direction="vertical">
-            {data.species.map((item, index) => <Link key={index}>{item}</Link>)}
-          </Space>
+          <CollapsibleList
+            data={data.species}
+            renderItem={(item, index) => (
+              <Link key={index} href={item}>{item}</Link>
+            )}
+          />
         ) : null,
     },
     {
@@ -85,9 +94,12 @@ function FilmCard() {
       label: 'starships',
       children: data.starships?.length
         ? (
-          <Space direction="vertical">
-            {data.starships.map((item, index) => <Link key={index}>{item}</Link>)}
-          </Space>
+          <CollapsibleList
+            data={data.starships}
+            renderItem={(item, index) => (
+              <Link key={index} href={item}>{item}</Link>
+            )}
+          />
         ) : null,
     },
     {
@@ -100,9 +112,12 @@ function FilmCard() {
       label: 'vehicles',
       children: data.vehicles?.length
         ? (
-          <Space direction="vertical">
-            {data.vehicles.map((item, index) => <Link key={index}>{item}</Link>)}
-          </Space>
+          <CollapsibleList
+            data={data.vehicles}
+            renderItem={(item, index) => (
+              <Link key={index} href={item}>{item}</Link>
+            )}
+          />
         ) : null,
     },
   ], [data]);
@@ -119,16 +134,14 @@ function FilmCard() {
 
   return (
     <Layout>
-      <Layout>
-        <Space split={<Divider type="vertical" />}>
-          <Title level={3}>
-            {data.title}
-          </Title>
-        </Space>
+      <Layout style={{ ...styles.Header, ...styles.ToolBar }}>
+        <Title level={3}>
+          {data.title}
+        </Title>
       </Layout>
 
-      <Layout style={{ width: 425 }}>
-        <CustomDescriptions columns={attributes} />
+      <Layout style={styles.Content}>
+        <CustomDescriptions columns={attributes} style={{ width: 425 }} />
       </Layout>
     </Layout>
   );

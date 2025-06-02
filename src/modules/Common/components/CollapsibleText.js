@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Typography } from 'antd';
 
-function ExpandableText({ text, rows = 1 }) {
+function CollapsibleText({ text, rows = 1 }) {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpand = e => {
@@ -24,4 +24,4 @@ function ExpandableText({ text, rows = 1 }) {
   );
 }
 
-export default ExpandableText;
+export default CollapsibleText;

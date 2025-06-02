@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Divider, Layout, Space, Table, Typography } from 'antd';
+import { Layout, Table, Typography } from 'antd';
 import { getPeopleList } from '../api/requests';
 import { formatDateTime, getIdFromUrl } from '../../Common/functions';
 import { UrlListTableCellView } from '../../Common/components';
+import Styles from '../../Common/Layouts/styles';
+
 /* eslint-disable camelcase */
 const { Link, Title } = Typography;
 
 function PeopleList() {
+  const styles = Styles();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -72,7 +75,7 @@ function PeopleList() {
         <UrlListTableCellView entities={films.map(url => ({
           key: getIdFromUrl(url),
           value: url,
-          url,
+          url: `/films/${getIdFromUrl(url)}`,
         }))}
         />
       ),
@@ -182,12 +185,10 @@ function PeopleList() {
 
   return (
     <Layout>
-      <Layout>
-        <Space split={<Divider type="vertical" />}>
-          <Title level={3}>
-            People list
-          </Title>
-        </Space>
+      <Layout style={{ ...styles.Header, ...styles.ToolBar }}>
+        <Title level={3}>
+          People list
+        </Title>
       </Layout>
 
       <Table
@@ -197,7 +198,7 @@ function PeopleList() {
         loading={isLoading}
         rowKey="id"
         size="small"
-        scroll={{ x: '100%', y: 'calc(100vh - 68px - 39px - 56px)' }}
+        scroll={{ x: '100%', y: 'calc(100vh - 69px - 39px - 56px)' }}
       />
     </Layout>
   );

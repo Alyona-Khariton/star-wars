@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Divider, Layout, Space, Typography } from 'antd';
-import { CustomDescriptions } from '../../Common/components';
+import { Layout, Space, Typography } from 'antd';
+import { CustomDescriptions, CollapsibleList } from '../../Common/components';
 import { getPeopleById } from '../api/requests';
 import { formatDateTime, getIdFromUrl } from '../../Common/functions';
+import Styles from '../../Common/Layouts/styles';
 
 const { Link, Title } = Typography;
 
 function PeopleCard() {
+  const styles = Styles();
   const { peopleId } = useParams();
   const [data, setData] = useState({});
 
@@ -36,11 +38,13 @@ function PeopleCard() {
       key: 'films',
       label: 'films',
       children: data.films?.length ? (
-        <Space direction="vertical">
-          {data.films.map((item, index) => (
+        <CollapsibleList
+          rows={3}
+          data={data.films}
+          renderItem={(item, index) => (
             <Link key={index} href={`/films/${getIdFromUrl(item)}`}>{item}</Link>
-          ))}
-        </Space>
+          )}
+        />
       ) : null,
     },
     {
@@ -127,16 +131,14 @@ function PeopleCard() {
 
   return (
     <Layout>
-      <Layout>
-        <Space split={<Divider type="vertical" />}>
-          <Title level={3}>
-            {data.name}
-          </Title>
-        </Space>
+      <Layout style={{ ...styles.Header, ...styles.ToolBar }}>
+        <Title level={3}>
+          {data.name}
+        </Title>
       </Layout>
 
-      <Layout style={{ width: 425 }}>
-        <CustomDescriptions columns={attributes} />
+      <Layout style={styles.Content}>
+        <CustomDescriptions columns={attributes} style={{ width: 425 }} />
       </Layout>
     </Layout>
   );

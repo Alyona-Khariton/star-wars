@@ -7,6 +7,7 @@ import {
 import { Layout, Menu } from 'antd';
 import { PeopleCard, PeopleList } from '../modules/People/containers';
 import { FilmCard } from '../modules/Films/containers';
+import Styles from '../modules/Common/Layouts/styles';
 
 const { Content, Sider } = Layout;
 
@@ -26,23 +27,27 @@ const items = [
 
 function App() {
   const [collapsed, setCollapsed] = useState(false);
+  const styles = Styles();
 
   return (
     <Router>
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+      <Layout hasSider style={{ height: '100vh' }}>
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={value => setCollapsed(value)}
+          style={styles.Sider}
+        >
           <Menu theme="dark" defaultSelectedKeys={['people']} mode="inline" items={items} />
         </Sider>
 
-        <Layout>
-          <Content style={{ margin: '0 16px' }}>
-            <Routes>
-              <Route path="/people" element={<PeopleList />} />
-              <Route path="/people/:peopleId" element={<PeopleCard />} />
-              <Route path="/films/:filmId" element={<FilmCard />} />
-            </Routes>
-          </Content>
-        </Layout>
+        <Content style={styles.Main}>
+          <Routes>
+            <Route path="/people" element={<PeopleList />} />
+            <Route path="/people/:peopleId" element={<PeopleCard />} />
+            <Route path="/films/:filmId" element={<FilmCard />} />
+          </Routes>
+        </Content>
       </Layout>
     </Router>
   );
