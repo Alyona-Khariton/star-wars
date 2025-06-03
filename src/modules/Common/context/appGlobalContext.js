@@ -1,11 +1,14 @@
 import { Alert } from 'antd';
+import { NotificationProvider } from './notificationContext';
 
 const { ErrorBoundary } = Alert;
 
 function AppGlobalContextProvider({ children }) {
   return (
     <ErrorBoundary>
-      {children}
+      <NotificationProvider>
+        {children}
+      </NotificationProvider>
     </ErrorBoundary>
   );
 }

@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Table, Typography } from 'antd';
-import { getPeopleList } from '../api/requests';
+import { getFilmsList } from '../api/requests';
 import { formatDateTime, getIdFromUrl } from '../../Common/functions';
-import { UrlListTableCellView } from '../../Common/components';
+import { UrlListTableCellView, MultipleAttributeTableCellView } from '../../Common/components';
 import Styles from '../../Common/Layouts/styles';
 
 /* eslint-disable camelcase */
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
-function PeopleList() {
+function FilmsList() {
   const styles = Styles();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,7 @@ function PeopleList() {
   const onLoad = async () => {
     setIsLoading(true);
     try {
-      const res = await getPeopleList() || [];
+      const res = await getFilmsList() || [];
       setData(res.map(item => {
         return {
           ...item,
@@ -35,20 +35,20 @@ function PeopleList() {
 
   const columns = [
     {
-      key: 'name',
-      dataIndex: 'name',
-      title: 'name',
+      key: 'title',
+      dataIndex: 'title',
+      title: 'title',
       ellipsis: true,
       width: 200,
-      render: (_, { name, id }) => <Link to={`/people/${id}`}>{name}</Link>,
+      render: (_, { title, id }) => <Link to={`/films/${id}`}>{title}</Link>,
     },
     {
-      key: 'eye_color',
-      dataIndex: 'eye_color',
-      title: 'eye_color',
+      key: 'director',
+      dataIndex: 'director',
+      title: 'director',
       ellipsis: true,
       width: 120,
-      render: (_, { eye_color }) => eye_color,
+      render: (_, { director }) => director,
     },
     {
       key: 'created',
@@ -67,67 +67,73 @@ function PeopleList() {
       render: (_, { edited }) => formatDateTime({ value: edited, format: 'L LT' }),
     },
     {
-      key: 'films',
-      dataIndex: 'films',
-      title: 'films',
+      key: 'characters',
+      dataIndex: 'characters',
+      title: 'characters',
       ellipsis: true,
       width: 100,
-      render: (_, { films }) => (
-        <UrlListTableCellView entities={films.map(url => ({
+      render: (_, { characters }) => (
+        <UrlListTableCellView entities={characters.map(url => ({
           key: getIdFromUrl(url),
           value: url,
-          url: `/films/${getIdFromUrl(url)}`,
+          url: `/people/${getIdFromUrl(url)}`,
         }))}
         />
       ),
     },
     {
-      key: 'gender',
-      dataIndex: 'gender',
-      title: 'gender',
+      key: 'episode_id',
+      dataIndex: 'episode_id',
+      title: 'episode_id',
       ellipsis: true,
       width: 120,
-      render: (_, { gender }) => gender,
+      render: (_, { episode_id }) => episode_id,
     },
     {
-      key: 'hair_color',
-      dataIndex: 'hair_color',
-      title: 'hair_color',
+      key: 'opening_crawl',
+      dataIndex: 'opening_crawl',
+      title: 'opening_crawl',
       ellipsis: true,
       width: 120,
-      render: (_, { hair_color }) => hair_color,
+      render: (_, { opening_crawl }) => (
+        <MultipleAttributeTableCellView
+          values={opening_crawl}
+          content={<Paragraph>{opening_crawl}</Paragraph>}
+        >
+          {opening_crawl}
+        </MultipleAttributeTableCellView>
+      ),
     },
     {
-      key: 'height',
-      dataIndex: 'height',
-      title: 'height',
+      key: 'planets',
+      dataIndex: 'planets',
+      title: 'planets',
       ellipsis: true,
       width: 80,
-      render: (_, { height }) => height,
+      render: (_, { planets }) => (
+        <UrlListTableCellView entities={planets.map(url => ({
+          key: getIdFromUrl(url),
+          value: url,
+          url,
+        }))}
+        />
+      ),
     },
     {
-      key: 'homeworld',
-      dataIndex: 'homeworld',
-      title: 'homeworld',
+      key: 'producer',
+      dataIndex: 'producer',
+      title: 'producer',
       ellipsis: true,
       width: 240,
-      render: (_, { homeworld }) => <Link>{homeworld}</Link>,
+      render: (_, { producer }) => producer,
     },
     {
-      key: 'mass',
-      dataIndex: 'mass',
-      title: 'mass',
-      ellipsis: true,
-      width: 80,
-      render: (_, { mass }) => mass,
-    },
-    {
-      key: 'skin_color',
-      dataIndex: 'skin_color',
-      title: 'skin_color',
+      key: 'release_date',
+      dataIndex: 'release_date',
+      title: 'release_date',
       ellipsis: true,
       width: 120,
-      render: (_, { skin_color }) => skin_color,
+      render: (_, { release_date }) => release_date,
     },
     {
       key: 'species',
@@ -188,7 +194,7 @@ function PeopleList() {
     <Layout>
       <Layout style={{ ...styles.Header, ...styles.ToolBar }}>
         <Title level={3}>
-          People list
+          Films list
         </Title>
       </Layout>
 
@@ -205,4 +211,4 @@ function PeopleList() {
   );
 }
 
-export default PeopleList;
+export default FilmsList;

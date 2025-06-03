@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { PeopleCard, PeopleList } from '../modules/People/containers';
-import { FilmCard } from '../modules/Films/containers';
+import { FilmCard, FilmsList } from '../modules/Films/containers';
 import Styles from '../modules/Common/Layouts/styles';
 
 const { Content, Sider } = Layout;
@@ -45,6 +45,7 @@ function App() {
           <Routes>
             <Route path="/people" element={<PeopleList />} />
             <Route path="/people/:peopleId" element={<PeopleCard />} />
+            <Route path="/films" element={<FilmsList />} />
             <Route path="/films/:filmId" element={<FilmCard />} />
           </Routes>
         </Content>

@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Layout, Space, Typography } from 'antd';
 import { CustomDescriptions, CollapsibleList } from '../../Common/components';
 import { getPeopleById } from '../api/requests';
 import { formatDateTime, getIdFromUrl } from '../../Common/functions';
 import Styles from '../../Common/Layouts/styles';
 
-const { Link, Title } = Typography;
+const { Title } = Typography;
 
 function PeopleCard() {
   const styles = Styles();
@@ -42,7 +42,7 @@ function PeopleCard() {
           rows={3}
           data={data.films}
           renderItem={(item, index) => (
-            <Link key={index} href={`/films/${getIdFromUrl(item)}`}>{item}</Link>
+            <Link key={index} to={`/films/${getIdFromUrl(item)}`}>{item}</Link>
           )}
         />
       ) : null,

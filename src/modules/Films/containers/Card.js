@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Layout, Typography } from 'antd';
 import { CustomDescriptions, CollapsibleList, CollapsibleText } from '../../Common/components';
 import { getFilmById } from '../api/requests';
 import { formatDateTime, getIdFromUrl } from '../../Common/functions';
 import Styles from '../../Common/Layouts/styles';
 
-const { Link, Title } = Typography;
+const { Title } = Typography;
 
 function FilmCard() {
   const styles = Styles();
@@ -41,7 +41,7 @@ function FilmCard() {
         <CollapsibleList
           data={data.characters}
           renderItem={(item, index) => (
-            <Link key={index} href={`/people/${getIdFromUrl(item)}`}>{item}</Link>
+            <Link key={index} to={`/people/${getIdFromUrl(item)}`}>{item}</Link>
           )}
         />
       ) : null,
@@ -61,7 +61,7 @@ function FilmCard() {
           <CollapsibleList
             data={data.planets}
             renderItem={(item, index) => (
-              <Link key={index} href={item}>{item}</Link>
+              <Link key={index} href={item} target="_blank">{item}</Link>
             )}
           />
         ) : null,
@@ -84,7 +84,7 @@ function FilmCard() {
           <CollapsibleList
             data={data.species}
             renderItem={(item, index) => (
-              <Link key={index} href={item}>{item}</Link>
+              <Link key={index} href={item} target="_blank">{item}</Link>
             )}
           />
         ) : null,
@@ -97,7 +97,7 @@ function FilmCard() {
           <CollapsibleList
             data={data.starships}
             renderItem={(item, index) => (
-              <Link key={index} href={item}>{item}</Link>
+              <Link key={index} href={item} target="_blank">{item}</Link>
             )}
           />
         ) : null,
@@ -115,7 +115,7 @@ function FilmCard() {
           <CollapsibleList
             data={data.vehicles}
             renderItem={(item, index) => (
-              <Link key={index} href={item}>{item}</Link>
+              <Link key={index} href={item} target="_blank">{item}</Link>
             )}
           />
         ) : null,

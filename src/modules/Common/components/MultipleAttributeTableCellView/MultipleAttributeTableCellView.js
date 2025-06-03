@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button, Col, Popover, Row, Space } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
-// import { notificationService } from '@Common/context/notificationContext';
+import { notificationService } from '../../context/notificationContext';
 
 function MultipleAttributeTableCellView({
   values,
@@ -42,10 +42,9 @@ function MultipleAttributeTableCellView({
 
   const handleCopy = text => {
     navigator.clipboard.writeText(text);
-    // notificationService.notify?.success({
-    //   message: 'Copy Success',
-    //   duration: 2,
-    // });
+    notificationService.notify?.success({
+      message: 'Copy Success',
+    });
   };
 
   const showPopover = Array.isArray(values)
