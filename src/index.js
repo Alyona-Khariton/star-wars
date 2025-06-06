@@ -6,11 +6,9 @@ import AppGlobalContextProvider from './modules/Common/context/appGlobalContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <AppGlobalContextProvider>
-      <App />
-    </AppGlobalContextProvider>
-  </React.StrictMode>
+  <AppGlobalContextProvider>
+    <App />
+  </AppGlobalContextProvider>
 );
 
 reportWebVitals();

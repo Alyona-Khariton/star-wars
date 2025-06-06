@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
 import {
   VideoCameraOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+
+import ErrorDisplay from '../modules/Common/components/Error';
+import { useErrorStore } from '../modules/Common/Stores';
 import { PeopleCard, PeopleList } from '../modules/People/containers';
 import { FilmCard, FilmsList } from '../modules/Films/containers';
 import Styles from '../modules/Common/Layouts/styles';
@@ -26,11 +29,13 @@ const items = [
 ];
 
 function App() {
+  const { hasError, dataError } = useErrorStore();
   const [collapsed, setCollapsed] = useState(false);
   const styles = Styles();
 
   return (
     <Router>
+      {hasError && <ErrorDisplay error={dataError} />}
       <Layout hasSider style={{ height: '100vh' }}>
         <Sider
           collapsible

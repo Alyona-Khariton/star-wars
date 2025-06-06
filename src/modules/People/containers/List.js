@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Table, Typography } from 'antd';
 import { getPeopleList } from '../api/requests';
 import { formatDateTime, getIdFromUrl } from '../../Common/functions';
 import { UrlListTableCellView } from '../../Common/components';
+import useRequest from '../../Common/hooks/useRequest';
 import Styles from '../../Common/Layouts/styles';
 
 /* eslint-disable camelcase */
@@ -11,26 +12,22 @@ const { Title } = Typography;
 
 function PeopleList() {
   const styles = Styles();
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const onLoad = async () => {
-    setIsLoading(true);
-    try {
+  const { isLoading, request, data } = useRequest({
+    request: async () => {
       const res = await getPeopleList() || [];
-      setData(res.map(item => {
+      return res.map(item => {
         return {
           ...item,
           id: getIdFromUrl(item.url),
         };
-      }));
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      });
+    },
+    autoRun: false,
+  });
 
   useEffect(() => {
-    onLoad();
+    request();
   }, []);
 
   const columns = [
