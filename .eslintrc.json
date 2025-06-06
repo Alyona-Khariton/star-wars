@@ -6,7 +6,8 @@
     "node": true
   },
   "extends": ["airbnb"],
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "parserOptions": {
     "requireConfigFile": false,
     "sourceType": "module",
@@ -16,10 +17,10 @@
   },
   "overrides": [
     {
-      "files": ["*.jsx", "*.js"],
+      "files": ["*.jsx", "*.js", "*.tsx", "*.ts"],
+      "parser": "typescript-eslint-parser",
       "rules": {
         "no-unused-expressions": 0,
-        "no-undef": 0,
         "max-len": 0,
         "jsx-a11y/anchor-is-valid": 0,
         "no-restricted-globals": 0,
@@ -28,6 +29,8 @@
     }
   ],
   "rules": {
+    "no-undef": "off",
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "no-return-await": "off", // Разрешить возвращать await в асинхронных функциях
     "operator-linebreak": [
       // Правило для управления переносами строк вокруг операторов
@@ -56,7 +59,7 @@
 
     "react/prefer-stateless-function": 0, // Отключает правило, которое требует использовать статические компоненты (без состояния), если не используется состояние или жизненные методы.
 
-    "react/jsx-no-undef": 0, // Отключает правило, запрещающее использование необъявленных компонентов в JSX.
+    "react/jsx-no-undef": "off", // Отключает правило, запрещающее использование необъявленных компонентов в JSX.
 
     "react/react-in-jsx-scope": 0, // Отключает правило, требующее импортировать React в каждом файле, использующем JSX. Это актуально для новых версий React, где импорт React не обязателен.
 
@@ -77,13 +80,6 @@
     "react/prop-types": "off", // Отключает проверку типов пропсов в компонентах React.
 
     "react/no-array-index-key": 0, // Отключает предупреждение о использовании индекса массива в качестве ключа для элементов списка.
-
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [".js", ".jsx"]
-      }
-    ], // Разрешает использование JSX в файлах с расширением .js и .jsx.
 
     "comma-dangle": ["error", "only-multiline"], // Требует запятую в конце последнего элемента в многострочных объектах и массивах.
 

@@ -7,6 +7,7 @@ import {
 } from '@ant-design/icons';
 
 import ErrorDisplay from '../modules/Common/components/Error';
+import { ThemeToggle } from '../modules/Common/components';
 import { useErrorStore } from '../modules/Common/Stores';
 import { PeopleCard, PeopleList } from '../modules/People/containers';
 import { FilmCard, FilmsList } from '../modules/Films/containers';
@@ -43,6 +44,7 @@ function App() {
           onCollapse={value => setCollapsed(value)}
           style={styles.Sider}
         >
+          <ThemeToggle />
           <Menu theme="dark" defaultSelectedKeys={['people']} mode="inline" items={items} />
         </Sider>
 
